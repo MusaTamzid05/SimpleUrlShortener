@@ -1,5 +1,9 @@
 package lib
 
+import (
+    "math/rand"
+)
+
 type Controller struct {
     shortenLength int
     model *Model
@@ -29,6 +33,16 @@ func (c *Controller) SearchByShortenUrl(shortenUrl string) UrlData {
 }
 
 func (c Controller) GenerateShortenUrl() string  {
-    return ""
+    keys := "abcdefghijklmnopqrstuvwxyz"
+    shortenUrl := ""
+
+    for i := 0 ; i < c.shortenLength;  i += 1 {
+        index := rand.Intn(len(keys))
+        shortenUrl += string(keys[index])
+
+    }
+
+
+    return shortenUrl
 
 }
