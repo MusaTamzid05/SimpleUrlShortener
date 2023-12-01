@@ -19,7 +19,7 @@ func CreateUrlHandler(c *gin.Context) {
     
     }
 
-    MainController.Add(urlData)
+    urlData= MainController.Add(urlData)
 
 
     c.IndentedJSON(http.StatusCreated, urlData)
@@ -30,5 +30,21 @@ func GetAllHandler(c *gin.Context) {
     urlInfos  := MainController.GetAll()
     fmt.Println("total data ", len(urlInfos))
     c.IndentedJSON(http.StatusOK, urlInfos)
+
+}
+
+
+func SearchByShortenUrl(c *gin.Context) {
+    shortenUrl := c.Param("shorten")
+    urlData := MainController.SearchByShortenUrl(shortenUrl)
+    fmt.Println(urlData.Url)
+
+    if urlData.Name == "" {
+        c.IndentedJSON(http.StatusNotFound, urlData)
+    } else  {
+        c.Redirect(http.StatusMovedPermanently, urlData.Url)
+
+    }
+
 
 }

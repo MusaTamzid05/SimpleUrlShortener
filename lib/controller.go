@@ -18,9 +18,10 @@ func (c *Controller) Init() {
 }
 
 
-func (c *Controller) Add(urlData UrlData) {
+func (c *Controller) Add(urlData UrlData) UrlData {
     urlData.ShortenUrl = c.GenerateShortenUrl()
     c.model.Add(urlData)
+    return urlData
 }
 
 func (c *Controller) GetAll() []UrlData {
@@ -29,7 +30,16 @@ func (c *Controller) GetAll() []UrlData {
 
 
 func (c *Controller) SearchByShortenUrl(shortenUrl string) UrlData {
+    urlDataList := c.GetAll()
+
+    for _, urlData := range urlDataList {
+        if urlData.ShortenUrl == shortenUrl {
+            return urlData
+        }
+    }
+
     return UrlData{}
+
 }
 
 func (c Controller) GenerateShortenUrl() string  {
@@ -46,3 +56,4 @@ func (c Controller) GenerateShortenUrl() string  {
     return shortenUrl
 
 }
+
