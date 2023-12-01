@@ -3,12 +3,13 @@ package lib
 import (
     "net/http"
     "github.com/gin-gonic/gin"
+    "fmt"
 )
 
 func CreateUrlHandler(c *gin.Context) {
-    var model Model
+    var urlData UrlData
 
-    err := c.BindJSON(&model)
+    err := c.BindJSON(&urlData)
 
     if err != nil {
         c.JSON(http.StatusBadRequest, gin.H {
@@ -18,6 +19,16 @@ func CreateUrlHandler(c *gin.Context) {
     
     }
 
-    c.IndentedJSON(http.StatusCreated, model)
+    MainController.Add(urlData)
+
+
+    c.IndentedJSON(http.StatusCreated, urlData)
+
+}
+
+func GetAllHandler(c *gin.Context) {
+    urlInfos  := MainController.GetAll()
+    fmt.Println("total data ", len(urlInfos))
+    c.IndentedJSON(http.StatusOK, urlInfos)
 
 }

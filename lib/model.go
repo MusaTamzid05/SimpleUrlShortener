@@ -9,6 +9,7 @@ import (
 )
 
 type UrlData struct {
+    gorm.Model
     Name string          `json:"name"`
     Url string           `json:"url"`
     ShortenUrl string    `json:"shortenUrl"`
@@ -48,3 +49,15 @@ func NewModel() *Model{
     return &Model{db:database}
 
 }
+
+func (m* Model) Add(urlData UrlData) {
+    m.db.Create(&urlData)
+}
+
+func (m* Model) GetAll() []UrlData {
+    urlDataList := []UrlData{}
+    m.db.Find(&urlDataList)
+    return urlDataList
+}
+
+

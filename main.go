@@ -13,6 +13,7 @@ func init() {
 func main() {
     router := gin.Default()
     router.POST("/new", lib.CreateUrlHandler)
+    router.GET("/", lib.GetAllHandler)
 
     router.Run()
 
