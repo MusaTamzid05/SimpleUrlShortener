@@ -2,11 +2,19 @@ package main
 
 
 import (
-    "fmt"
+    "github.com/gin-gonic/gin"
+    "url_shortener/lib"
 )
 
-func main() {
+func init() {
+    lib.MainController.Init()
+}
 
-    fmt.Println("Shortener")
+func main() {
+    router := gin.Default()
+    router.POST("/new", lib.CreateUrlHandler)
+
+    router.Run()
+
 
 }
